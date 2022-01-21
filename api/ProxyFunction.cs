@@ -34,7 +34,7 @@ namespace Proxy
 
     [FunctionName(FunctionName)]
     public async Task<HttpResponseMessage> RunAsync(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = FunctionName + FunctionRouteTemplate)] HttpRequestMessage req)
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", "put", "delete", "patch", Route = FunctionName + FunctionRouteTemplate)] HttpRequestMessage req)
     {
       ProxyInfo proxyInfo = null;
       HttpRequestMessage forwardRequest = null;
