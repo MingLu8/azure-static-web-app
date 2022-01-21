@@ -29,36 +29,13 @@
                 .then(function (response) {
                     // handle success
                     console.log(response);
-					axios.post(url + "/babou/users/me")
-                    //axios.post("https://asi-api-proxy.azurewebsites.net/api/proxy/babou/users/me")
-						.then(function (resp){
-							console.log(resp);
-						}).catch(function (error) {
-							// handle error
-							console.log(error);
-						})
-						.then(function () {
-							// always executed
-						});
-                    axios.get(url + "/babou/users/me", header)
-                    //axios.post("https://asi-api-proxy.azurewebsites.net/api/proxy/babou/users/me")
-                        .then(function (resp){
-                            console.log(resp);
-                        }).catch(function (error) {
-                            // handle error
-                            console.log(error);
-                        })
-                        .then(function () {
-                            // always executed
-                        });
-                })
-                .catch(function (error) {
-                    // handle error
-                    console.log(error);
-                })
-                .then(function () {
-                    // always executed
+                    axios.get(url + "/babou/users/me")
+					axios.post(url + "/babou/users/me");
+					axios.put(url + "/babou/users/me");
+					axios.delete(url + "/babou/users/me");
+					axios.patch(url + "/babou/users/me");
                 });
+              
         }
     </script>
 </head>
