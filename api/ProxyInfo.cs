@@ -29,23 +29,18 @@ namespace Proxy
             RequestUri = GetTargetUri(serviceBaseUrl),
         };
 
-            try
-            {
-                forwardRequest.Content = new StreamContent(await Request.Content.ReadAsStreamAsync());
+        if (
+                Request.Method != HttpMethod.Head
+                && Request.Method != HttpMethod.Trace)
+            forwardRequest.Content = new StreamContent(await Request.Content.ReadAsStreamAsync());
 
-            }
-            finally
+        foreach (var header in Request.Headers)
+        {
+            if (!forwardRequest.Headers.TryAddWithoutValidation(header.Key, header.Value) && forwardRequest.Content != null)
             {
-                foreach (var header in Request.Headers)
-                {
-                    if (!forwardRequest.Headers.TryAddWithoutValidation(header.Key, header.Value) && forwardRequest.Content != null)
-                    {
-                        forwardRequest.Content?.Headers.TryAddWithoutValidation(header.Key, header.Value);
-                    }
-                }
+                    forwardRequest.Content?.Headers.TryAddWithoutValidation(header.Key, header.Value);
             }
-
-       
+        }
 
         return forwardRequest;
     }
