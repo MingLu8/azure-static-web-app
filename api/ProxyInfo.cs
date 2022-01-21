@@ -21,7 +21,7 @@ namespace Proxy
       Request = request;
     }
 
-    public async Task<HttpRequestMessage> CreateForwardRequest(string serviceBaseUrl)
+    public async Task<HttpRequestMessage> CreateForwardRequestAsync(string serviceBaseUrl)
     {
         var forwardRequest = new HttpRequestMessage
         {
@@ -29,8 +29,7 @@ namespace Proxy
             RequestUri = GetTargetUri(serviceBaseUrl),
         };
 
-        if (Request.Method != HttpMethod.Get
-                && Request.Method != HttpMethod.Head
+        if (Request.Method != HttpMethod.Head
                 && Request.Method != HttpMethod.Trace)
             forwardRequest.Content = new StreamContent(await Request.Content.ReadAsStreamAsync());
 
