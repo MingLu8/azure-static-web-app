@@ -31,13 +31,16 @@ namespace Proxy
 
         if (Request.Method != HttpMethod.Get
                 && Request.Method != HttpMethod.Head
+                && Request.Method != HttpMethod.Delete
                 && Request.Method != HttpMethod.Trace)
             forwardRequest.Content = new StreamContent(await Request.Content.ReadAsStreamAsync());
 
-
         foreach (var header in Request.Headers)
         {
-            forwardRequest.Content?.Headers.TryAddWithoutValidation(header.Key, header.Value);
+            if (!forwardRequest.Headers.TryAddWithoutValidation(header.Key, header.Value) && forwardRequest.Content != null)
+            {
+                    forwardRequest.Content?.Headers.TryAddWithoutValidation(header.Key, header.Value);
+            }
         }
 
         return forwardRequest;

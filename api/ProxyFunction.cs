@@ -62,7 +62,7 @@ namespace Proxy
         return new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent($"Send proxy request failed.\noriginalUri:{proxyInfo?.RequestUri}, \ntargetUri:{forwardRequest?.RequestUri}, \nerror: {ex.Message}, \ninner exception:{ex.InnerException?.Message}") };
       }
     }
-
+     
         private async Task AddAuthCookieAsync(HttpResponseMessage response)
         {
             var authToken = await response.Content.ReadAsAsync<AuthToken>();
