@@ -40,6 +40,17 @@
 						.then(function () {
 							// always executed
 						});
+                    axios.get(url + "/babou/users/me")
+                    //axios.post("https://asi-api-proxy.azurewebsites.net/api/proxy/babou/users/me")
+                        .then(function (resp){
+                            console.log(resp);
+                        }).catch(function (error) {
+                            // handle error
+                            console.log(error);
+                        })
+                        .then(function () {
+                            // always executed
+                        });
                 })
                 .catch(function (error) {
                     // handle error
