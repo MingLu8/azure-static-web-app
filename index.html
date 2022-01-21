@@ -40,7 +40,7 @@
 						.then(function () {
 							// always executed
 						});
-                    axios.get(url + "/babou/users/me")
+                    axios.get(url + "/babou/users/me", header)
                     //axios.post("https://asi-api-proxy.azurewebsites.net/api/proxy/babou/users/me")
                         .then(function (resp){
                             console.log(resp);
