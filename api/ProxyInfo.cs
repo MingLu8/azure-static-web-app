@@ -34,12 +34,21 @@ namespace Proxy
             forwardRequest.Content = new StreamContent(await Request.Content.ReadAsStreamAsync());
 
 
-        foreach (var header in Request.Headers)
-        {
-            forwardRequest.Content?.Headers.TryAddWithoutValidation(header.Key, header.Value);
-        }
+        //foreach (var header in Request.Headers)
+        //{
+        //    forwardRequest.Content?.Headers.TryAddWithoutValidation(header.Key, header.Value);
+        //}
 
-        return forwardRequest;
+            foreach (var header in Request.Headers)
+            {
+                if (!forwardRequest.Headers.TryAddWithoutValidation(header.Key, header.Value) && forwardRequest.Content != null)
+                {
+                    forwardRequest.Content?.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                }
+            }
+
+
+            return forwardRequest;
     }
 
     public Uri GetTargetUri(string serviceBaseUrl)
