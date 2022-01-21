@@ -1,9 +1,0 @@
-{
-  "profiles": {
-    "Api": {
-      "commandName": "Project",
-      //"commandLineArgs": "start --cors *"
-      "commandLineArgs": "start --cors * --useHttps --cert server.pfx --password 1111"
-    }
-  }
-}
