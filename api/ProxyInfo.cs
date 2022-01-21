@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Proxy
 {
@@ -20,23 +21,27 @@ namespace Proxy
       Request = request;
     }
 
-    public HttpRequestMessage CreateForwardRequest(string serviceBaseUrl)
+    public async Task<HttpRequestMessage> CreateForwardRequestAsync(string serviceBaseUrl)
     {
-      var forwardRequest = new HttpRequestMessage
-      {
-        Method = Request.Method,
-        RequestUri = GetTargetUri(serviceBaseUrl),       
-      };
+        var forwardRequest = new HttpRequestMessage
+        {
+            Method = Request.Method,
+            RequestUri = GetTargetUri(serviceBaseUrl),
+        };
 
-      if (Request.Method != HttpMethod.Get && Request.Method != HttpMethod.Options)
-        forwardRequest.Content = Request.Content;
+        if (Request.Method != HttpMethod.Get
+                && Request.Method != HttpMethod.Head
+                && Request.Method != HttpMethod.Delete
+                && Request.Method != HttpMethod.Trace)
+            forwardRequest.Content = new StreamContent(await Request.Content.ReadAsStreamAsync());
 
-      foreach (var header in Request.Headers)
-      {
-        forwardRequest.Content?.Headers.TryAddWithoutValidation(header.Key, header.Value);
-      }
 
-      return forwardRequest;
+        foreach (var header in Request.Headers)
+        {
+            forwardRequest.Content?.Headers.TryAddWithoutValidation(header.Key, header.Value);
+        }
+
+        return forwardRequest;
     }
 
     public Uri GetTargetUri(string serviceBaseUrl)

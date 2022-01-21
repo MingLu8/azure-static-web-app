@@ -43,7 +43,7 @@ namespace Proxy
         _logger.LogInformation($"Forwarding request started. original url:{req.RequestUri}");
         proxyInfo = new ProxyInfo(req);
         var serviceBaseUrl = GetServiceBaseUrl(proxyInfo.ServiceBaseUrlSettingName);
-        forwardRequest = proxyInfo.CreateForwardRequest(serviceBaseUrl);
+        forwardRequest = await proxyInfo.CreateForwardRequestAsync(serviceBaseUrl);
 
         var response = await SendAsync(forwardRequest).ConfigureAwait(false);
 

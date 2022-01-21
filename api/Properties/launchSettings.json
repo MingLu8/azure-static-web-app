@@ -3,7 +3,7 @@
     "Api": {
       "commandName": "Project",
       //"commandLineArgs": "start --cors *"
-      "commandLineArgs": "start --cors * --useHttps --cert server.pfx --password 1111"
+      "commandLineArgs": "start --build  --pause-on-error --cors * --useHttps --cert server.pfx --password 1111"
     }
   }
 }
