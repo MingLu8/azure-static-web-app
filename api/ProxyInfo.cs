@@ -50,9 +50,17 @@ namespace Proxy
             {
                 contentHeaderValues.Add(header.Key, JsonConvert.SerializeObject(header.Value, Formatting.Indented));
             }
-
-            var cookies = Request.Headers.GetCookies("AuthCookie");
-            var cv = cookies == null ? "N/A" : JsonConvert.SerializeObject(cookies, Formatting.Indented);
+            var cv = "N/A";
+            try
+            {
+                var cookies = Request.Headers.GetCookies("AuthCookie");
+                cv = cookies == null ? "N/A" : JsonConvert.SerializeObject(cookies, Formatting.Indented);
+            }
+            catch(Exception ex)
+            {
+                cv = ex.Message;
+            }
+            
             var info = new
             {
                 requestContentLength = Request.Content?.Headers?.ContentLength ?? 0,
