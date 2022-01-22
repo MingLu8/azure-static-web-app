@@ -42,17 +42,17 @@ namespace Proxy
             var reqHeaderValues = new Dictionary<string, string>();
             foreach (var header in Request.Headers)
             {
-                reqHeaderValues.Add(header.Key, JsonConvert.SerializeObject(header.Value));
+                reqHeaderValues.Add(header.Key, JsonConvert.SerializeObject(header.Value, Formatting.Indented));
             }
 
             var contentHeaderValues = new Dictionary<string, string>();
             foreach (var header in Request.Content?.Headers)
             {
-                contentHeaderValues.Add(header.Key, JsonConvert.SerializeObject(header.Value));
+                contentHeaderValues.Add(header.Key, JsonConvert.SerializeObject(header.Value, Formatting.Indented));
             }
 
             var cookies = Request.Headers.GetCookies("AuthCookie");
-            var cv = cookies == null ? "N/A" : JsonConvert.SerializeObject(cookies);
+            var cv = cookies == null ? "N/A" : JsonConvert.SerializeObject(cookies, Formatting.Indented);
             var info = new
             {
                 requestContentLength = Request.Content?.Headers?.ContentLength ?? 0,
@@ -63,8 +63,8 @@ namespace Proxy
                 cookies = cv
             };
 
-            forwardRequest.Headers?.Add("req-info", JsonConvert.SerializeObject(info));
-            forwardRequest.Content?.Headers?.Add("req-info", JsonConvert.SerializeObject(info));
+            forwardRequest.Headers?.Add("req-info", JsonConvert.SerializeObject(info, Formatting.Indented));
+            forwardRequest.Content?.Headers?.Add("req-info", JsonConvert.SerializeObject(info, Formatting.Indented));
 
 
             foreach (var header in Request.Headers)
