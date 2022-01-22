@@ -42,7 +42,7 @@ namespace Proxy
             var reqHeaderValues = new Dictionary<string, string>();
             foreach (var header in Request.Headers)
             {
-                reqHeaderValues.Add(header.Key, header.Value.ToString());
+                reqHeaderValues.Add(header.Key, JsonConvert.SerializeObject(header.Value));
             }
 
             var contentHeaderValues = new Dictionary<string, string>();
