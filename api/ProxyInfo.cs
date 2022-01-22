@@ -53,7 +53,7 @@ namespace Proxy
             var cv = "N/A";
             try
             {
-                var cookies = Request.Headers.GetCookies("AuthCookie");
+                var cookies = Request.Headers.GetValues("Cookie");
                 cv = cookies == null ? "N/A" : JsonConvert.SerializeObject(cookies);
             }
             catch(Exception ex)
@@ -77,15 +77,11 @@ namespace Proxy
 
             foreach (var header in Request.Headers)
             {
-                if(!forwardRequest.Content.Headers.TryAddWithoutValidation(header.Key, header.Value))
-                {
-                    forwardRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
-                }
+                forwardRequest.Content.Headers.TryAddWithoutValidation(header.Key, header.Value);
             }
 
-            forwardRequest.Headers.Add("Cookies", "AuthCookie=yyy");
-            forwardRequest.Content.Headers.Add("Cookies", "AuthCookie2=xxx");
-
+            if(Request.Method == HttpMethod.Get)
+                forwardRequest.Headers.TryAddWithoutValidation("Cookies", Request.Headers.GetValues("Cookies"));
 
             return forwardRequest;
         }
