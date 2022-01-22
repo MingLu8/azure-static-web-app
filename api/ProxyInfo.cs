@@ -33,7 +33,7 @@ namespace Proxy
         };
 
         if (Request.Method != HttpMethod.Head
-                && Request.Method == HttpMethod.Get
+                && Request.Method != HttpMethod.Get
                 && Request.Method != HttpMethod.Trace)
             forwardRequest.Content = new StreamContent(await Request.Content.ReadAsStreamAsync());
 
