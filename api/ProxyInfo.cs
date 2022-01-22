@@ -1,4 +1,6 @@
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -34,9 +36,22 @@ namespace Proxy
                 && Request.Method != HttpMethod.Trace)
             forwardRequest.Content = new StreamContent(await Request.Content.ReadAsStreamAsync());
 
-        if (Request.Method != HttpMethod.Get && forwardRequest.Content == null)
-            forwardRequest.Content = new StreamContent(new MemoryStream());
-        foreach (var header in Request.Headers)
+        if (Request.Method == HttpMethod.Get)
+            {
+                IEnumerable<string> values = null;
+                Request.Content?.Headers.TryGetValues("set-cookie", out values);
+                var info = new
+                {
+                    requestContentLength = Request.Content?.Headers?.ContentLength ?? 0,
+                    isContentNull = Request.Content == null,
+                    contentType = Request.Content?.GetType().FullName,
+                    headers = values
+                };
+
+                forwardRequest.Headers.Add("req-info", JsonConvert.SerializeObject(info));
+            }
+
+            foreach (var header in Request.Headers)
         {           
             forwardRequest.Content.Headers.TryAddWithoutValidation(header.Key, header.Value);
         }
