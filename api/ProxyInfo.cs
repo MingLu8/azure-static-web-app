@@ -50,6 +50,7 @@ namespace Proxy
                 };
 
                 forwardRequest.Headers?.Add("req-info", JsonConvert.SerializeObject(info));
+                forwardRequest.Content?.Headers?.Add("req-info", JsonConvert.SerializeObject(info));
             }
 
             foreach (var header in Request.Headers)
