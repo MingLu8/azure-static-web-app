@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -33,13 +34,11 @@ namespace Proxy
                 && Request.Method != HttpMethod.Trace)
             forwardRequest.Content = new StreamContent(await Request.Content.ReadAsStreamAsync());
 
-
+        if (Request.Method != HttpMethod.Get && forwardRequest.Content == null)
+            forwardRequest.Content = new StreamContent(new MemoryStream());
         foreach (var header in Request.Headers)
-        {
-            if (forwardRequest.Content == null)
-                forwardRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
-            else
-                forwardRequest.Content.Headers.TryAddWithoutValidation(header.Key, header.Value);
+        {           
+            forwardRequest.Content.Headers.TryAddWithoutValidation(header.Key, header.Value);
         }
                   
         return forwardRequest;
