@@ -49,12 +49,12 @@ namespace Proxy
                     headers = values
                 };
 
-                forwardRequest.Headers.Add("req-info", JsonConvert.SerializeObject(info));
+                forwardRequest.Headers?.Add("req-info", JsonConvert.SerializeObject(info));
             }
 
             foreach (var header in Request.Headers)
         {           
-            forwardRequest.Content.Headers.TryAddWithoutValidation(header.Key, header.Value);
+            forwardRequest.Content?.Headers.TryAddWithoutValidation(header.Key, header.Value);
         }
                   
         return forwardRequest;
