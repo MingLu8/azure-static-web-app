@@ -63,12 +63,12 @@ namespace Proxy
             
             var info = new
             {
+                cookies = cv,
                 requestContentLength = Request.Content?.Headers?.ContentLength ?? 0,
                 isContentNull = Request.Content == null,
                 contentType = Request.Content?.GetType().FullName,
                 reqHeaderValues,
-                contentHeaderValues,
-                cookies = cv
+                contentHeaderValues
             };
 
             forwardRequest.Headers?.Add("req-info", JsonConvert.SerializeObject(info));
