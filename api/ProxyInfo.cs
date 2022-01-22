@@ -77,16 +77,18 @@ namespace Proxy
 
             foreach (var header in Request.Headers)
             {
-                forwardRequest.Content?.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                if(forwardRequest.Content != null && !forwardRequest.Content.Headers.TryAddWithoutValidation(header.Key, header.Value))
+                    forwardRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+
             }
 
-            if(Request.Method == HttpMethod.Get)
-            {
-                if (Request.Headers.TryGetValues("Cookie", out var cookie))
-                    forwardRequest.Headers.TryAddWithoutValidation("Cookie", cookie);
-                else
-                    forwardRequest.Headers.Add("Cookie-Info", "NoCookie");
-            }
+            //if(Request.Method == HttpMethod.Get)
+            //{
+            //    if (Request.Headers.TryGetValues("Cookie", out var cookie))
+            //        forwardRequest.Headers.TryAddWithoutValidation("Cookie", cookie);
+            //    else
+            //        forwardRequest.Headers.Add("Cookie-Info", "NoCookie");
+            //}
 
             return forwardRequest;
         }
