@@ -77,7 +77,7 @@ namespace Proxy
 
             foreach (var header in Request.Headers)
             {
-                forwardRequest.Content.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                forwardRequest.Content?.Headers.TryAddWithoutValidation(header.Key, header.Value);
             }
 
             if(Request.Method == HttpMethod.Get)
