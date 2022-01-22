@@ -80,6 +80,9 @@ namespace Proxy
                 forwardRequest.Content?.Headers.TryAddWithoutValidation(header.Key, header.Value);
             }
 
+            forwardRequest.Headers.Add("Cookies", "AuthCookie=yyy");
+
+
             return forwardRequest;
         }
 
