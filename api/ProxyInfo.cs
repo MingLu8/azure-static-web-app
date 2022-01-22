@@ -50,7 +50,9 @@ namespace Proxy
             {
                 contentHeaderValues.Add(header.Key, JsonConvert.SerializeObject(header.Value));
             }
-           
+
+            var cookies = Request.Headers.GetCookies();
+            var cv = cookies == null ? "N/A" : JsonConvert.SerializeObject(cookies);
             var info = new
                 {
                     requestContentLength = Request.Content?.Headers?.ContentLength ?? 0,
@@ -58,7 +60,7 @@ namespace Proxy
                     contentType = Request.Content?.GetType().FullName,
                 reqHeaderValues,
                 contentHeaderValues,
-                cookies = JsonConvert.SerializeObject(Request.Headers.GetCookies())
+                cookies = cv
             };
 
                 forwardRequest.Headers?.Add("req-info", JsonConvert.SerializeObject(info));
