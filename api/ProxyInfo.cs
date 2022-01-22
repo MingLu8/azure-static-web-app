@@ -24,13 +24,13 @@ namespace Proxy
       Request = request;
     }
 
-    public async Task<HttpRequestMessage> CreateForwardRequestAsync(string serviceBaseUrl)
-    {
-        var forwardRequest = new HttpRequestMessage
+        public async Task<HttpRequestMessage> CreateForwardRequestAsync(string serviceBaseUrl)
         {
-            Method = Request.Method,
-            RequestUri = GetTargetUri(serviceBaseUrl),
-        };
+            var forwardRequest = new HttpRequestMessage
+            {
+                Method = Request.Method,
+                RequestUri = GetTargetUri(serviceBaseUrl),
+            };
 
             if (Request.Method != HttpMethod.Head
                     && Request.Method != HttpMethod.Get
@@ -51,29 +51,29 @@ namespace Proxy
                 contentHeaderValues.Add(header.Key, JsonConvert.SerializeObject(header.Value));
             }
 
-            var cookies = Request.Headers.GetCookies();
+            var cookies = Request.Headers.GetCookies("AuthCookie");
             var cv = cookies == null ? "N/A" : JsonConvert.SerializeObject(cookies);
             var info = new
-                {
-                    requestContentLength = Request.Content?.Headers?.ContentLength ?? 0,
-                    isContentNull = Request.Content == null,
-                    contentType = Request.Content?.GetType().FullName,
+            {
+                requestContentLength = Request.Content?.Headers?.ContentLength ?? 0,
+                isContentNull = Request.Content == null,
+                contentType = Request.Content?.GetType().FullName,
                 reqHeaderValues,
                 contentHeaderValues,
                 cookies = cv
             };
 
-                forwardRequest.Headers?.Add("req-info", JsonConvert.SerializeObject(info));
-                forwardRequest.Content?.Headers?.Add("req-info", JsonConvert.SerializeObject(info));
-            
+            forwardRequest.Headers?.Add("req-info", JsonConvert.SerializeObject(info));
+            forwardRequest.Content?.Headers?.Add("req-info", JsonConvert.SerializeObject(info));
+
 
             foreach (var header in Request.Headers)
-        {           
-            forwardRequest.Content?.Headers.TryAddWithoutValidation(header.Key, header.Value);
+            {
+                forwardRequest.Content?.Headers.TryAddWithoutValidation(header.Key, header.Value);
+            }
+
+            return forwardRequest;
         }
-                  
-        return forwardRequest;
-    }
 
     public Uri GetTargetUri(string serviceBaseUrl)
     {
