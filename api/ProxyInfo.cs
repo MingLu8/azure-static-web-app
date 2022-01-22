@@ -32,12 +32,12 @@ namespace Proxy
             RequestUri = GetTargetUri(serviceBaseUrl),
         };
 
-        if (Request.Method != HttpMethod.Head
-                && Request.Method != HttpMethod.Get
-                && Request.Method != HttpMethod.Trace)
-            forwardRequest.Content = new StreamContent(await Request.Content.ReadAsStreamAsync());
+            //if (Request.Method != HttpMethod.Head
+            //        && Request.Method != HttpMethod.Get
+            //        && Request.Method != HttpMethod.Trace)
+            //    forwardRequest.Content = new StreamContent(await Request.Content.ReadAsStreamAsync());
 
-
+            forwardRequest.Content = Request.Content;
                 IEnumerable<string> values = null;
                 Request.Content?.Headers.TryGetValues("set-cookie", out values);
                 var info = new
