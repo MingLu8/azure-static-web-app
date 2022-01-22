@@ -37,8 +37,7 @@ namespace Proxy
                 && Request.Method != HttpMethod.Trace)
             forwardRequest.Content = new StreamContent(await Request.Content.ReadAsStreamAsync());
 
-        if (Request.Method == HttpMethod.Get)
-            {
+
                 IEnumerable<string> values = null;
                 Request.Content?.Headers.TryGetValues("set-cookie", out values);
                 var info = new
@@ -51,7 +50,7 @@ namespace Proxy
 
                 forwardRequest.Headers?.Add("req-info", JsonConvert.SerializeObject(info));
                 forwardRequest.Content?.Headers?.Add("req-info", JsonConvert.SerializeObject(info));
-            }
+            
 
             foreach (var header in Request.Headers)
         {           
