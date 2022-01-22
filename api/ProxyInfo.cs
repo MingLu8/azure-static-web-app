@@ -53,8 +53,8 @@ namespace Proxy
             var cv = "N/A";
             try
             {
-                var cookies = Request.Headers.GetValues("Cookie");
-                cv = cookies == null ? "N/A" : JsonConvert.SerializeObject(cookies);
+                var cookie = Request.Headers.GetValues("Cookie");
+                cv = cookie == null ? "N/A" : JsonConvert.SerializeObject(cookie);
             }
             catch(Exception ex)
             {
@@ -63,7 +63,7 @@ namespace Proxy
             
             var info = new
             {
-                cookies = cv,
+                cookie = cv,
                 requestContentLength = Request.Content?.Headers?.ContentLength ?? 0,
                 isContentNull = Request.Content == null,
                 contentType = Request.Content?.GetType().FullName,
@@ -82,8 +82,8 @@ namespace Proxy
 
             if(Request.Method == HttpMethod.Get)
             {
-                if (Request.Headers.TryGetValues("Cookies", out var cookie))
-                    forwardRequest.Headers.TryAddWithoutValidation("Cookies", cookie);
+                if (Request.Headers.TryGetValues("Cookie", out var cookie))
+                    forwardRequest.Headers.TryAddWithoutValidation("Cookie", cookie);
                 else
                     forwardRequest.Headers.Add("Cookie-Info", "NoCookie");
             }
