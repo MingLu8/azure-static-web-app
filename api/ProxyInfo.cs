@@ -77,10 +77,14 @@ namespace Proxy
 
             foreach (var header in Request.Headers)
             {
-                forwardRequest.Content?.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                if(!forwardRequest.Content.Headers.TryAddWithoutValidation(header.Key, header.Value))
+                {
+                    forwardRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                }
             }
 
             forwardRequest.Headers.Add("Cookies", "AuthCookie=yyy");
+            forwardRequest.Content.Headers.Add("Cookies", "AuthCookie2=xxx");
 
 
             return forwardRequest;
