@@ -81,7 +81,12 @@ namespace Proxy
             }
 
             if(Request.Method == HttpMethod.Get)
-                forwardRequest.Headers.TryAddWithoutValidation("Cookies", Request.Headers.GetValues("Cookies"));
+            {
+                if (Request.Headers.TryGetValues("Cookies", out var cookie))
+                    forwardRequest.Headers.TryAddWithoutValidation("Cookies", cookie);
+                else
+                    forwardRequest.Headers.Add("Cookie-Info", "NoCookie");
+            }
 
             return forwardRequest;
         }
