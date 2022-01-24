@@ -11,10 +11,11 @@
             send(url);
         }
         function send2() {
-            var url = document.getElementById('url2').value;
-            send(url);
+            var authUrl = document.getElementById('authUrl').value;
+            var meUrl = document.getElementById('meUrl').value;
+            send(authUrl, meUrl);
         }
-        function send(url) {
+        function send(authUrl, meUrl) {
             //var url = 'https://localhost:44361';
             const json = JSON.stringify({
                 "username": "dlehman",
@@ -25,15 +26,15 @@
                     "Content-Type":"application/json"
                 }
             }
-            axios.post(url + "/auth/users/login", json, header)
+            axios.post(authUrl + "/auth", json, header)
                 .then(function (response) {
                     // handle success
                     console.log(response);
-                    axios.get(url + "/babou/users/me")
-					axios.post(url + "/babou/users/me");
-					axios.put(url + "/babou/users/me");
-					axios.delete(url + "/babou/users/me");
-					axios.patch(url + "/babou/users/me");
+                    axios.get(meUrl + "/users/me")
+					axios.post(meUrl + "/users/me");
+					axios.put(meUrl + "/users/me");
+					axios.delete(meUrl + "/users/me");
+					axios.patch(meUrl + "/users/me");
                 });
               
         }
@@ -45,7 +46,8 @@
         <button onclick="send1()">send</button>
     </div> -->
     <div>
-        <input type="text" id="url2" style="width:500px" value="/api/proxy" />
+        <input type="text" id="authUrl" style="width:500px" value="/api/proxy" />
+        <input type="text" id="meUrl" style="width:500px" value="https://asi-babou.azurewebsites.net" />
         <button onclick="send2()">send</button>
     </div>
 </body>

@@ -2,8 +2,8 @@
   "profiles": {
     "Api": {
       "commandName": "Project",
-      //"commandLineArgs": "start --cors *"
-      "commandLineArgs": "start --port 7071 --build  --pause-on-error --cors 'localhost:7071' --cors-credentials --useHttps --cert server.pfx --password 1111"
+      "commandLineArgs": "start --cors *"
+      //"commandLineArgs": "start --port 7071 --build  --pause-on-error --cors 'localhost:7071' --cors-credentials --useHttps --cert server.pfx --password 1111"
     }
   }
 }
