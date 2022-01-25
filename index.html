@@ -27,7 +27,7 @@
                     "Content-Type":"application/json"
                 }
             }
-            axios.post(authUrl + "/auth", json, header)
+            axios.post(authUrl, json, header)
                 .then(function (response) {
                     // handle success
                     console.log(response);
@@ -47,7 +47,7 @@
         <button onclick="send1()">send</button>
     </div> -->
     <div>
-        <input type="text" id="authUrl" style="width:500px" value="/api/proxy" />
+        <input type="text" id="authUrl" style="width:500px" value="/api/demo" />
         <input type="text" id="meUrl" style="width:500px" value="https://asi-babou.azurewebsites.net" />
         <button onclick="send2()">send</button>
     </div>
