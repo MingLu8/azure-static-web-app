@@ -5,6 +5,31 @@
     <title></title>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
+        async fetchData() {
+
+            this.message = "Fetching..";
+        
+            this.response = "";
+        
+            this.response = await axios(this.apiURL, {
+        
+              method: "get",
+        
+              withCredentials: true,
+        
+              headers: {
+        
+                  "Accept": "application/json",
+        
+                  "Content-Type": "application/json",                
+        
+              }
+        
+            });
+        
+            this.message = "Fetched";
+        
+          }
        // axios.defaults.withCredentials = true
         function send1() {
             var url = document.getElementById('url').value;

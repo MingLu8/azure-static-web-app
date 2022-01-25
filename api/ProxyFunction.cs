@@ -42,17 +42,17 @@ namespace Proxy
       {
         _logger.LogInformation($"Forwarding request started. original url:{req.RequestUri}");
         proxyInfo = new ProxyInfo(req);
-        var serviceBaseUrl = GetServiceBaseUrl(proxyInfo.ServiceBaseUrlSettingName);
-        forwardRequest = await proxyInfo.CreateForwardRequestAsync(serviceBaseUrl);
+       // var serviceBaseUrl = GetServiceBaseUrl(proxyInfo.ServiceBaseUrlSettingName);
+       // forwardRequest = await proxyInfo.CreateForwardRequestAsync(serviceBaseUrl);
 
-        var response = await SendAsync(forwardRequest).ConfigureAwait(false);
-
+       // var response = await SendAsync(forwardRequest).ConfigureAwait(false);
+        var response = new HttpResponseMessage();
                 //if (response.IsSuccessStatusCode && proxyInfo.IsAuthRequest)
                 //{
-                //    await AddAuthCookieAsync(response).ConfigureAwait(false);
+          await AddAuthCookieAsync(response).ConfigureAwait(false);
                 //}
 
-                _logger.LogInformation($"Forwarding request completed. original url:{req.RequestUri}, targetUrl:{forwardRequest.RequestUri}");
+        //        _logger.LogInformation($"Forwarding request completed. original url:{req.RequestUri}, targetUrl:{forwardRequest.RequestUri}");
 
         return response;
       }
@@ -65,9 +65,9 @@ namespace Proxy
      
         private async Task AddAuthCookieAsync(HttpResponseMessage response)
         {
-            var authToken = await response.Content.ReadAsAsync<AuthToken>();
-            response.Headers.Add("set-cookie", $"AuthCookie3={authToken.AccessToken};httponly;secure;path=/;samesite=none");
-            response.Headers.Add("set-cookie", $"RefreshCookie3={authToken.RefreshToken};httponly;secure;path=/;samesite=none");              
+           // var authToken = await response.Content.ReadAsAsync<AuthToken>();
+            response.Headers.Add("set-cookie", "AuthCookie={authToken.AccessToken};httponly;secure;path=/;samesite=none");
+            response.Headers.Add("set-cookie", "RefreshCookie={authToken.RefreshToken};httponly;secure;path=/;samesite=none");              
         }
 
         protected virtual Task<HttpResponseMessage> SendAsync(HttpRequestMessage request) => _httpClient.SendAsync(request);
