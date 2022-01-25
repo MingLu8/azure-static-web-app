@@ -6,20 +6,15 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
         axios.defaults.withCredentials = true
-        function send1() {
-            var url = document.getElementById('url').value;
-            send(url);
-        }
         function send2() {
             var authUrl = document.getElementById('authUrl').value;
             var meUrl = document.getElementById('meUrl').value;
             send(authUrl, meUrl);
         }
         function send(authUrl, meUrl) {
-            //var url = 'https://localhost:44361';
             const json = JSON.stringify({
-                "username": "dlehman",
-                "password": "password1"
+                "username": "xxxx",
+                "password": "yyyy"
             });
             const header = {
                 headers: {
@@ -42,10 +37,6 @@
     </script>
 </head>
 <body>
-    <!-- <div>
-        <input type="text" id="url" style="width:500px" value="https://asi-api-proxy.azurewebsites.net/api/proxy" />
-        <button onclick="send1()">send</button>
-    </div> -->
     <div>
         <input type="text" id="authUrl" style="width:500px" value="/api/demo" />
         <input type="text" id="meUrl" style="width:500px" value="https://asi-babou.azurewebsites.net" />
