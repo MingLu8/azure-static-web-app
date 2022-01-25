@@ -5,32 +5,7 @@
     <title></title>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
-        async fetchData() {
-
-            this.message = "Fetching..";
-        
-            this.response = "";
-        
-            this.response = await axios(this.apiURL, {
-        
-              method: "get",
-        
-              withCredentials: true,
-        
-              headers: {
-        
-                  "Accept": "application/json",
-        
-                  "Content-Type": "application/json",                
-        
-              }
-        
-            });
-        
-            this.message = "Fetched";
-        
-          }
-       // axios.defaults.withCredentials = true
+        axios.defaults.withCredentials = true
         function send1() {
             var url = document.getElementById('url').value;
             send(url);
@@ -48,6 +23,7 @@
             });
             const header = {
                 headers: {
+                    "Accept": "application/json",
                     "Content-Type":"application/json"
                 }
             }
@@ -55,11 +31,11 @@
                 .then(function (response) {
                     // handle success
                     console.log(response);
-                    axios.get(meUrl + "/users/me")
-					axios.post(meUrl + "/users/me");
-					axios.put(meUrl + "/users/me");
-					axios.delete(meUrl + "/users/me");
-					axios.patch(meUrl + "/users/me");
+                    axios.get(meUrl + "/users/me", header)
+					axios.post(meUrl + "/users/me", {}, header);
+					axios.put(meUrl + "/users/me", {}, header);
+					axios.delete(meUrl + "/users/me", header);
+					axios.patch(meUrl + "/users/me",{}, header);
                 });
               
         }
