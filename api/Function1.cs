@@ -24,11 +24,11 @@ namespace Proxy
         }
         
          [FunctionName("me")]
-        public static HttpResponseMessage Run(
+        public static HttpResponseMessage RunMe(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
-            var response = new HttpResponseMessage{Content = new StringContent($"AuthCookie:{Request.Cookies["AuthCookie"] ?? "NA"}")};           
+            var response = new HttpResponseMessage{Content = new StringContent($"AuthCookie:{req.Cookies["AuthCookie"] ?? "NA"}")};           
             return response;
         }
     }
