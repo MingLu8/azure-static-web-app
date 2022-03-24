@@ -22,5 +22,14 @@ namespace Proxy
             response.Headers.Add("Set-Cookie", $"AuthCookie={Guid.NewGuid()};HttpOnly;Secure;Path=/;SameSite=None");
             return response;
         }
+        
+         [FunctionName("me")]
+        public static HttpResponseMessage Run(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
+            ILogger log)
+        {
+            var response = new HttpResponseMessage{Content = new StringContent($"AuthCookie:{Request.Cookies["AuthCookie"] ?? "NA"}")};           
+            return response;
+        }
     }
 }
