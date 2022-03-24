@@ -6,12 +6,10 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
         axios.defaults.withCredentials = true
-        function send2() {
+
+        function send() {
             var authUrl = document.getElementById('authUrl').value;
             var meUrl = document.getElementById('meUrl').value;
-            send(authUrl, meUrl);
-        }
-        function send(authUrl, meUrl) {
             const json = JSON.stringify({
                 "username": "xxxx",
                 "password": "yyyy"
@@ -34,13 +32,44 @@
                 });
               
         }
+        function send2() {
+            var authUrl = document.getElementById('authUrl').value;
+            var meUrl = document.getElementById('meUrl').value;
+            const json = JSON.stringify({
+                "username": "xxxx",
+                "password": "yyyy"
+            });
+            const header = {
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                }
+            }
+            axios.post(authUrl, json, header)
+                .then(function (response) {
+                    // handle success
+                    console.log(response);
+                   // axios.get(meUrl + "/users/me", header);
+
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('GET', meUrl + "/users/me", true);
+                    xhr.withCredentials = true;
+                    xhr.send(null);
+                    //axios.post(meUrl + "/users/me", {}, header);
+                    //axios.put(meUrl + "/users/me", {}, header);
+                    //axios.delete(meUrl + "/users/me", header);
+                    //axios.patch(meUrl + "/users/me",{}, header);
+                });
+
+        }       
     </script>
 </head>
 <body>
     <div>
         <input type="text" id="authUrl" style="width:500px" value="/api/demo" />
         <input type="text" id="meUrl" style="width:500px" value="https://asi-babou.azurewebsites.net" />
-        <button onclick="send2()">send</button>
+        <button onclick="send()">send</button>
+        <button onclick="send2()">send2</button>
     </div>
 </body>
 </html>
