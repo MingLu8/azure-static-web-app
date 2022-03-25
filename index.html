@@ -17,28 +17,27 @@
             const header = {
                 headers: {
                     "Accept": "application/json",
-                    "Content-Type":"application/json"
+                    "Content-Type": "application/json",
+                    "XXXX":"xxxx"
                 }
             }
             axios.post(authUrl, json, header)
                 .then(function (response) {
                     // handle success
                     console.log(response);
-                    //axios.get(meUrl, {
-                    //    withCredentials: "include"
-                    //});
+                    axios.get(meUrl, {
+                        withCredentials: "include"
+                    });
                     axios.post(meUrl, {}, {
                         withCredentials: "include"
                     });
-                    //axios.put(meUrl, {}, {
-                    //    withCredentials: "include"
-                    //});
-                    //axios.delete(meUrl, {
-                    //    withCredentials: "include"
-                    //});
-                    //axios.patch(meUrl, {}, {
-                    //    withCredentials: "include"
-                    //});
+                    axios.put(meUrl, {}, header);
+                    axios.delete(meUrl, {
+                        withCredentials: "include"
+                    });
+                    axios.patch(meUrl, {}, {
+                        withCredentials: "include"
+                    });
                 });
               
         }
@@ -62,7 +61,7 @@
                    // axios.get(meUrl + "/users/me", header);
 
                     var xhr = new XMLHttpRequest();
-                    xhr.open('POST', meUrl, true);
+                    xhr.open('GET', meUrl, true);
                     xhr.withCredentials = true;
                     xhr.send(null);
                     //axios.post(meUrl + "/users/me", {}, header);
