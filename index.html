@@ -24,11 +24,21 @@
                 .then(function (response) {
                     // handle success
                     console.log(response);
-                    axios.get(meUrl, header);
-					axios.post(meUrl, {}, header);
-					axios.put(meUrl, {}, header);
-					axios.delete(meUrl, header);
-					axios.patch(meUrl,{}, header);
+                    axios.get(meUrl, {
+                        withCredentials: "include"
+                    });
+                    axios.post(meUrl, {}, {
+                        withCredentials: "include"
+                    });
+                    axios.put(meUrl, {}, {
+                        withCredentials: "include"
+                    });
+                    axios.delete(meUrl, {
+                        withCredentials: "include"
+                    });
+                    axios.patch(meUrl, {}, {
+                        withCredentials: "include"
+                    });
                 });
               
         }
